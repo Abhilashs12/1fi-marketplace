@@ -66,18 +66,12 @@ const ProductDetails = () => {
     }));
   }, [product, selectedVariant]);
 
-  useEffect(() => {
-    if (emiPlans.length > 0) {
-      setSelectedPlanId(emiPlans[0].id);
-    }
-  }, [emiPlans]);
-
-  const selectedPlan = emiPlans.find(
-    (plan) => plan.id === selectedPlanId
-  );
+  const selectedPlan =
+    emiPlans.find((plan) => plan.id === selectedPlanId) ?? emiPlans[0] ?? null;
 
   const handleVariantChange = (variant) => {
     setSelectedVariant(variant);
+    setSelectedPlanId(null);
   };
 
   const handleProceed = () => {
@@ -166,9 +160,7 @@ const ProductDetails = () => {
             </div>
 
             <div className="mt-4 rounded-xl border border-gray-100 bg-gray-50 p-4">
-              <p className="text-xs text-gray-500">
-                Selected variant
-              </p>
+              <p className="text-xs text-gray-500">Selected variant</p>
 
               <div className="mt-1 flex items-center justify-between gap-4">
                 <p className="text-sm font-semibold text-gray-900">
