@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { ArrowLeft, Check, ShieldCheck } from "lucide-react";
 
 import { getProduct } from "../services/marketplaceApi";
@@ -23,11 +23,11 @@ const calculateEmi = (principal, annualRate, tenure) => {
 
 const ProductDetails = () => {
   const { productId } = useParams();
+  const navigate = useNavigate();
 
   const [product, setProduct] = useState(null);
   const [selectedVariant, setSelectedVariant] = useState(null);
   const [selectedPlanId, setSelectedPlanId] = useState(null);
-  const [showConfirmation, setShowConfirmation] = useState(false);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
@@ -78,15 +78,20 @@ const ProductDetails = () => {
 
   const handleVariantChange = (variant) => {
     setSelectedVariant(variant);
-    setShowConfirmation(false);
   };
 
   const handleProceed = () => {
-    if (!selectedPlan) {
+    if (!selectedPlan || !selectedVariant || !product) {
       return;
     }
 
-    setShowConfirmation(true);
+    navigate("/emi-review", {
+      state: {
+        product,
+        variant: selectedVariant,
+        plan: selectedPlan,
+      },
+    });
   };
 
   if (loading) {
@@ -151,12 +156,12 @@ const ProductDetails = () => {
         </Link>
 
         <div className="mt-5 grid items-start gap-5 md:grid-cols-[0.9fr_1.1fr]">
-          <div className="rounded-2xl border border-gray-200 bg-white p-5">
-            <div className="flex h-[460px] items-center justify-center rounded-xl bg-gray-50 p-8">
+          <div className="rounded-2xl border border-gray-200 bg-white p-5 md:sticky md:top-5">
+            <div className="flex h-[320px] items-center justify-center rounded-xl bg-gray-50 p-6 sm:h-[360px] sm:p-8 lg:h-[400px]">
               <img
                 src={selectedVariant.image}
                 alt={`${product.name} ${selectedVariant.name}`}
-                className="max-h-[390px] max-w-full object-contain"
+                className="max-h-[270px] max-w-full object-contain sm:max-h-[310px] lg:max-h-[350px]"
               />
             </div>
 
@@ -225,10 +230,7 @@ const ProductDetails = () => {
                     <button
                       key={plan.id}
                       type="button"
-                      onClick={() => {
-                        setSelectedPlanId(plan.id);
-                        setShowConfirmation(false);
-                      }}
+                      onClick={() => setSelectedPlanId(plan.id)}
                       className={`w-full rounded-xl border p-3 text-left transition ${
                         selected
                           ? "border-purple-600 bg-purple-50"
@@ -320,56 +322,6 @@ const ProductDetails = () => {
                   )}/month EMI`
                 : "Select an EMI plan"}
             </button>
-
-            {showConfirmation && selectedPlan && (
-              <div className="mt-4 rounded-xl border border-green-200 bg-green-50 p-4">
-                <div className="flex items-start gap-3">
-                  <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-green-600">
-                    <Check size={16} className="text-white" />
-                  </div>
-
-                  <div className="min-w-0 flex-1">
-                    <p className="text-sm font-semibold text-green-900">
-                      EMI plan selected
-                    </p>
-
-                    <p className="mt-1 text-xs leading-5 text-green-800">
-                      {product.name} · {selectedVariant.name} ·{" "}
-                      {selectedVariant.storage}
-                    </p>
-
-                    <div className="mt-3 grid grid-cols-2 gap-2">
-                      <div className="rounded-lg bg-white/70 p-3">
-                        <p className="text-[11px] text-gray-500">
-                          Monthly EMI
-                        </p>
-
-                        <p className="mt-1 text-sm font-semibold text-gray-900">
-                          ₹
-                          {selectedPlan.monthlyAmount.toLocaleString(
-                            "en-IN"
-                          )}
-                        </p>
-                      </div>
-
-                      <div className="rounded-lg bg-white/70 p-3">
-                        <p className="text-[11px] text-gray-500">
-                          Tenure
-                        </p>
-
-                        <p className="mt-1 text-sm font-semibold text-gray-900">
-                          {selectedPlan.tenure} months
-                        </p>
-                      </div>
-                    </div>
-
-                    <p className="mt-3 text-xs font-medium text-green-800">
-                      Ready to proceed with this EMI plan.
-                    </p>
-                  </div>
-                </div>
-              </div>
-            )}
           </div>
         </div>
 

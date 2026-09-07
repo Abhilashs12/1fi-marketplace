@@ -9,7 +9,7 @@ const ProductCard = ({ product }) => {
       to={`/products/${product.id}`}
       className="group overflow-hidden rounded-2xl border border-gray-200 bg-white transition hover:-translate-y-0.5 hover:border-gray-300 hover:shadow-lg"
     >
-      <div className="flex h-64 items-center justify-center bg-gray-50 p-8">
+      <div className="flex h-56 items-center justify-center bg-gray-50 p-6 sm:h-64 sm:p-8">
         <img
           src={variant.image}
           alt={`${product.name} ${variant.name}`}
