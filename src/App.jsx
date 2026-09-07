@@ -1,8 +1,21 @@
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+
+import Shop from "./pages/Shop";
+import TopBrands from "./pages/TopBrands";
+import NearbyStores from "./pages/NearbyStores";
+import Marketplace from "./pages/Marketplace";
+
 const App = () => {
   return (
-    <div>
-      1Fi Marketplace
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Shop />} />
+        <Route path="/shop" element={<Shop />} />
+        <Route path="/shop/top-brands" element={<TopBrands />} />
+        <Route path="/shop/nearby-stores" element={<NearbyStores />} />
+        <Route path="/marketplace" element={<Marketplace />} />
+      </Routes>
+    </BrowserRouter>
   );
 };
 
