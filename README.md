@@ -39,9 +39,6 @@ The implementation focuses only on the Marketplace experience as required by the
 - Lucide React
 - JavaScript
 
-## Data & API Approach
-
-The assignment allows mock APIs/data when backend integration is not available.
 
 Product and EMI information is maintained separately from the UI in:
 
