@@ -1,19 +1,49 @@
-# React + Vite
+# 1Fi Marketplace
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A frontend implementation of the 1Fi Marketplace section built as part of the 1Fi SDE Intern Assignment.
 
-Currently, two official plugins are available:
+## Overview
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+The project extends the Shop experience with a dedicated 1Fi Marketplace where users can browse products, view product details, select variants, compare EMI plans, and proceed with a selected EMI option.
 
-## React Compiler
+The implementation focuses only on the Marketplace experience as required by the assignment.
 
-The React Compiler is enabled on this template. See [this documentation](https://react.dev/learn/react-compiler) for more information.
+## Features
 
-Note: This will impact Vite dev & build performances.
-You can also try [the experimental native React Compiler support in plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md#rust-react-compiler) by using `compiler: true` in the plugin options instead of using the Babel plugin.
+- Shop page with:
+  - Top Brands
+  - Nearby Stores
+  - 1Fi Marketplace
+- Marketplace product listing
+- Product search
+- Product images
+- Product pricing and MRP
+- Product variants
+- Variant-dependent pricing
+- EMI plan selection
+- Dynamic EMI calculation based on selected product variant
+- Cashback information
+- Product details
+- EMI review flow
+- EMI confirmation/success flow
+- Loading states
+- Error handling
+- Responsive layout
 
-## Expanding the ESLint configuration
+## Tech Stack
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- React
+- Vite
+- React Router
+- Tailwind CSS
+- Lucide React
+- JavaScript
+
+## Data & API Approach
+
+The assignment allows mock APIs/data when backend integration is not available.
+
+Product and EMI information is maintained separately from the UI in:
+
+```text
+src/data/products.js
